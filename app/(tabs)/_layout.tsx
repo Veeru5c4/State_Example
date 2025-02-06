@@ -1,7 +1,8 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
-
+import { Provider } from 'react-redux';
+import store from '../Models/store';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
@@ -12,6 +13,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
+    <Provider store={store}>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -26,6 +28,14 @@ export default function TabLayout() {
           default: {},
         }),
       }}>
+         <Tabs.Screen
+        name="Authentication"
+        options={{
+          title: 'Authentication',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+        }}
+      />
+      
       <Tabs.Screen
         name="index"
         options={{
@@ -36,10 +46,12 @@ export default function TabLayout() {
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
+          title: 'Cart',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
       />
+      
     </Tabs>
+    </Provider>
   );
 }
